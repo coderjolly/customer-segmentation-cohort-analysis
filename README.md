@@ -12,8 +12,7 @@ Credit Card services present these problems:
 - FI Bank's Credit Card Customers Queries should be resolved faster.
 
 ## Process
-Identify and classify the different segments in the existing customer base, based on their spending patterns, past interaction with the bank, and any other important data available.
-Specify the characteristics of each segment and notice the weak or strong patterns of each segment.
+Identify and classify the different segments in the existing customer base, based on their spending patterns, past interaction with the bank, and any other important data available. Specify the characteristics of each segment and notice the weak or strong patterns of each segment.
 Provide recommendations to FI Bank for each segment based on items 1 and 2 above. These recommendations should include how to expand the market penetration (new and current customers) and how to improve the customer services. Possibly recommend what type of service feature is important for each segment.
 
 **Data Dictionary**
@@ -59,5 +58,85 @@ This is an unsupervised classification problem.
   Attempt classification of customers using hierarchical clustering. Explore clustering with different linkage methods (i.e. single, complete, etc) and distances (i.e. euclidean, manhattan, etc) reviewing the cophenetic correlation and finding the ideal number of clusters. Visualize the clusters.
 - Compare K-means vs. Hierarchical clustering results.
 - Provide Insights and Recommendations.
+
+### Data Preprocessing
+
+The dataset is first cleaned and prepared:
+
+- Unique identifiers like `Customer Key` are removed
+- Missing values and duplicates are checked
+- `StandardScaler` is used to normalize the numerical features
+
+### Exploratory Data Analysis (EDA)
+
+EDA is performed on core behavioral metrics such as:
+
+- `Avg_Credit_Limit`
+- `Total_Credit_Cards`
+- `Total_visits_bank`
+- `Total_visits_online`
+- `Total_calls_made`
+
+Each feature is explored using histograms and boxplots.
+
+![eda-distribution](ss/eda-hist-box.png)
+
+### Feature Scaling
+
+All numerical features are standardized using Z-score normalization to ensure fair contribution during distance-based clustering:
+
+- Mean = 0
+- Standard Deviation = 1
+
+This ensures variables with larger scales (like credit limit) do not dominate clustering.
+
+### Clustering & Evaluation
+
+#### K-Means Clustering
+- The **Elbow Method** is used to determine the optimal number of clusters.
+- Cluster cohesion is validated using the **Silhouette Score**.
+
+![elbow-method](ss/elbow-method.png)
+*Inertia plot using Elbow Method*
+
+#### Hierarchical Clustering
+- Dendrograms show how observations merge into clusters.
+- Distance threshold lines help identify natural divisions.
+
+![dendrogram](ss/hierarchical-dendrogram.png)
+
+### PCA & Cluster Visualization
+
+Dimensionality reduction via PCA is applied to reduce the features to two components for easy visualization of clusters.
+
+![pca-kmeans](ss/pca-kmeans.png)
+*Clusters visualized in 2D PCA space (KMeans)*
+
+### Cluster Profiling
+
+After clustering, each group is profiled to understand customer characteristics. For example:
+
+- **Cluster 0**: High credit limit, low service usage — ideal premium customers
+- **Cluster 1**: Moderate limits, high digital activity — tech-savvy base
+- **Cluster 2**: Low limits, high support calls — operationally expensive segment
+
+These insights help the bank optimize:
+
+- Marketing strategy (e.g., target upselling campaigns)
+- Support services (e.g., reduce call load through automation)
+- Digital engagement programs
+
+---
+
+## Conclusion
+
+By segmenting customers using clustering and behavioral metrics, FI Bank can:
+
+- Personalize product offerings
+- Enhance operational efficiency
+- Increase customer satisfaction
+
+Clustering uncovers hidden patterns that aren’t obvious from raw metrics alone, enabling data-driven strategy decisions.
+
 
 
